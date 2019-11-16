@@ -34,6 +34,8 @@ Change directory to the cloned repo
 
 `cd persshistunt/`
 
-Run the commands using python3 or use our install script.
+Run the commands using _python3_ OR use our install script.
 
 `./install.sh`
+
+If you run the install script, the executable name available will be `persshistunt`
