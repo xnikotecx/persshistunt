@@ -41,9 +41,9 @@ def persist_ssh_tunnel(cmd):
 		return persist_ssh_tunnel(cmd)
 	try:
 		while True:
-			if not os.path.exists('/proc/'+str(pid)):
+			if not pid_exists(pid):
 				return persist_ssh_tunnel(cmd)
-			time.sleep(3)
+			time.sleep(4)
 	except KeyboardInterrupt:
 		os.kill(pid, signal.SIGKILL)
 		return sys.exit(221)
@@ -63,7 +63,14 @@ def payload_common(option, args):
 	return payload_legacy_ssh('-{} {}:{} {}'.format(option, opt2, opt1, " ".join(ps[4:])))
 
 def payload_legacy_ssh(args):
-	return 'ssh -fCN {} -o ServerAliveInterval=1 -o ServerAliveCountMax=1'.format(args)
+	return 'ssh -fCN {} -o ServerAliveInterval=3 -o ServerAliveCountMax=10'.format(args)
+
+def pid_exists(pid):
+	try:
+		os.kill(pid, 0)
+	except OSError:
+		return False
+	return True
 
 def shello(cmd):
 	try:
